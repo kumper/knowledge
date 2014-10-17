@@ -16,7 +16,7 @@ public class Rodzic implements Observator {
 		StringBuilder sb = new StringBuilder()
 			.append("Rodzic[")
 			.append(nazwa)
-			.append("]: Pi�knie.");
+			.append("]: Pięknie.");
 		
 		System.out.println(sb.toString());
 	}
