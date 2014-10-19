@@ -93,15 +93,6 @@
 			<artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
 			<version>1.2.2.osgi</version>
 		</dependency>
-		<!-- <dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy</artifactId>
-		</dependency> -->
-		<dependency>
-			<groupId>org.neo4j</groupId>
-			<artifactId>neo4j-cypher-compiler-2.1</artifactId>
-			<version>2.1.2</version>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -176,10 +167,6 @@
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>9.2.3.v20140905</version>
-				<configuration>
-					<jettyEnvXml>jetty-env.xml</jettyEnvXml>
-					<scanIntervalSeconds>10</scanIntervalSeconds>
-				</configuration>
 			</plugin>
 		</plugins>
 

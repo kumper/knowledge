@@ -1,6 +1,5 @@
 package com.kp.MessageBroker.ui;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.kp.MessageBroker.dao.CustomerDao;
