@@ -1,0 +1,4 @@
+* ¯eby uruchomiæ zainstaluj node.js dla Windowsa (http://nodejs.org/download/)
+* Dodaj plik node.exe do œcie¿ki PATH
+* uruchom konsolê, przejdŸ (cd ...) do katalogu z projektem
+* uruchom serwer: node scripts\web-server.js
