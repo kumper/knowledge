@@ -1,9 +1,13 @@
 package pl.kp.java8.lambdatest;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.util.BeanItemContainer;
@@ -19,12 +23,13 @@ import com.vaadin.ui.VerticalLayout;
 @SpringUI
 @Theme("valo")
 public class MainUI extends UI {
+	private final Logger LOG = LoggerFactory.getLogger(MainUI.class);
 
 	private Table table = new Table();
 	private BeanItemContainer<Person> container = new BeanItemContainer<Person>(
 			Person.class);
-	private CheckBox lastNameFilter = new CheckBox("Lastname");
-	private CheckBox ageFilter = new CheckBox("Age");
+	private CheckBox lastNameFilter = new CheckBox("Lastname = P*");
+	private CheckBox ageFilter = new CheckBox("Age > 20");
 
 	@Override
 	protected void init(VaadinRequest request) {
@@ -53,6 +58,37 @@ public class MainUI extends UI {
 
 			container.addAll(stream.collect(Collectors.toList()));
 		}
+		
+		final List<Person> testData = generateTestData();
+		
+		LOG.info("Średni wiek: {}", testData.stream().collect(Collectors.averagingDouble(Person::getAge)));
+		LOG.info("Suma lat wszystkich osób: {}", testData.stream().collect(Collectors.summarizingDouble(Person::getAge)).getSum());
+		LOG.info("Ludzie w wieku 30-50: {}", testData.stream()
+				.filter(e -> e.getAge() >= 30)
+				.filter(e -> e.getAge() <= 50)
+				.collect(Collectors.toList()));
+		
+		LOG.info("Lista posortowanych wieków:");
+		testData.stream()
+				.mapToInt(Person::getAge)
+				.sorted()
+				.forEach(e -> LOG.info(Integer.valueOf(e).toString()));
+		
+		testData.sort( (x, y) -> x.getAge() - y.getAge() );
+		LOG.info("Lista posortowanych wieków 2: {}", testData);
+		//to samo inaczej
+		testData.sort(Comparator.comparingInt(Person::getAge));
+		
+		LOG.info("Osoba z największym (ascii) nazwiskiem: {}", testData.stream().max(Comparator.comparing(Person::getLastName)).get());
+		
+		LOG.info("Grupowanie (suma lat) po nazwiskach");
+		testData.stream()
+				.collect(Collectors.groupingBy(Person::getLastName))
+				.forEach( (k, v) -> {
+					LOG.info("Suma lat nazwiska: {} = {}", k, v.stream().mapToInt(Person::getAge).sum());
+				});
+		
+		LOG.info("Lista oddzielona separatorem: {}", testData.stream().map(Person::getLastName).collect(Collectors.joining(" | ")));
 	}
 
 	private List<Person> generateTestData() {
@@ -63,6 +99,9 @@ public class MainUI extends UI {
 		ret.add(new Person("Emilia", "Sługosz", 19));
 		ret.add(new Person("Tomasz", "Więckowski", 6));
 		ret.add(new Person("Michał", "Parcikowski", 12));
+		ret.add(new Person("Krzysztof", "Perzan", 35));
+		ret.add(new Person("Michał", "Wielki", 42));
+		ret.add(new Person("Tomasz", "Perzan", 65));
 
 		return ret;
 	}
@@ -88,6 +127,12 @@ public class MainUI extends UI {
 
 		public int getAge() {
 			return age;
+		}
+
+		@Override
+		public String toString() {
+			return String.format("Person [firstName=%s, lastName=%s, age=%s]",
+					firstName, lastName, age);
 		}
 	}
 
