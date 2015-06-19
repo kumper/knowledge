@@ -15,6 +15,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -30,6 +31,7 @@ public class MainUI extends UI {
 			Person.class);
 	private CheckBox lastNameFilter = new CheckBox("Lastname = P*");
 	private CheckBox ageFilter = new CheckBox("Age > 20");
+	private Label customLabel = new Label("This should work with Firefox LiveReload plugin - yes, it does");
 
 	@Override
 	protected void init(VaadinRequest request) {
@@ -38,7 +40,7 @@ public class MainUI extends UI {
 		lastNameFilter.addValueChangeListener((e) -> refresh());
 		ageFilter.addValueChangeListener((e) -> refresh());
 
-		setContent(new VerticalLayout(table, new HorizontalLayout(lastNameFilter, ageFilter)));
+		setContent(new VerticalLayout(table, new HorizontalLayout(lastNameFilter, ageFilter), customLabel));
 
 		table.setContainerDataSource(container);
 
