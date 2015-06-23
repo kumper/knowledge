@@ -8,11 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @SuppressWarnings("serial")
 public class CustomUserDetails extends User implements UserDetails {
-
-	public CustomUserDetails(String username, String firstName,
-			String lastName, String password, String supplierCode, String roles) {
-		super(username, firstName, lastName, password, supplierCode, roles);
-	}
 	
 	public CustomUserDetails(User user) {
 		super(user);
