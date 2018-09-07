@@ -6,6 +6,7 @@
 	<version>1.0</version>
 	<name>Vaadin</name>
 	<packaging>war</packaging>
+	
 	<description>Vaadin example</description>
 
 	<properties>
